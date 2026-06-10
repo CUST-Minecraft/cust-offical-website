@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="搜索">
+  <defs>
+    <linearGradient id="lens" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d8fbff"/>
+      <stop offset="0.42" stop-color="#58d5e0"/>
+      <stop offset="1" stop-color="#1f7f9d"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bfc7c4"/>
+      <stop offset="0.5" stop-color="#59615d"/>
+      <stop offset="1" stop-color="#202521"/>
+    </linearGradient>
+    <linearGradient id="handle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d1a15a"/>
+      <stop offset="0.55" stop-color="#8c5628"/>
+      <stop offset="1" stop-color="#4a2b16"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="32" height="32" fill="none"/>
+
+  <path d="M6 5h12v2h3v3h2v10h-2v3h-3v2H8v-2H5v-3H3V8h3z" fill="#050605"/>
+  <path d="M8 5h10v2h3v3h2v8h-2v3h-3v2H8v-2H5v-3H3V10h2V7h3z" fill="url(#rim)"/>
+  <path d="M8 8h10v2h2v8h-2v2H8v-2H6v-8h2z" fill="#0b4050"/>
+  <path d="M9 9h8v2h2v7h-2v2H9v-2H7v-7h2z" fill="url(#lens)"/>
+  <path d="M10 10h5v2h-2v2h-3z" fill="#f2ffff" opacity=".86"/>
+  <path d="M16 17h3v2h-3z" fill="#baf3ff" opacity=".56"/>
+  <path d="M7 19h3v2h-3z" fill="#083242" opacity=".55"/>
+
+  <path d="M20 20h4v2h2v2h2v4h-4v-2h-2v-2h-2z" fill="#050605"/>
+  <path d="M19 19h4v2h2v2h2v4h-4v-2h-2v-2h-2z" fill="url(#handle)"/>
+  <path d="M21 20h3v2h2v2h-3v-2h-2z" fill="#e1b36b" opacity=".78"/>
+  <path d="M23 25h4v2h-4z" fill="#3f2411" opacity=".72"/>
+
+  <path d="M8 6h8v1.4H8zM4.8 10h1.5v7H4.8z" fill="#ffffff" opacity=".18"/>
+  <path d="M19 10h1.4v7H19zM9 21h8v1.2H9z" fill="#000000" opacity=".28"/>
+</svg>
