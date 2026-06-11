@@ -144,15 +144,15 @@ export const announcements: AnnouncementSummary[] = [
 
 export const posts: PostSummary[] = [
   {
-    title: '湖畔复刻进度记录',
-    slug: 'lake-build-progress',
-    summary: '建筑组最近在整理湖畔区域比例和夜间灯光，希望让校园复刻更有层次。',
-    content: '湖畔区域是校园复刻里很容易出氛围的地方。最近建筑组重点调整了岸线、树木密度和夜间光源，希望在保证可游玩的同时保留校园空间的熟悉感。',
-    coverImage: { src: asset('section-gallery-pixel.png'), alt: '湖畔复刻截图' },
-    gallery: [{ src: asset('section-gallery-pixel.png'), alt: '湖畔区域夜景' }],
+    title: '城市轨道交通建设记录',
+    slug: 'city-rail-build-progress',
+    summary: '建筑组正在整理城市道路、轨道交通和黄昏灯光，让服务器日常更有生活气息。',
+    content: '这次更新聚焦城市交通区域：道路、车站、轨道和高楼灯光被重新梳理，希望玩家从主城出发时能感受到更完整的城市动线。黄昏光照会作为主要氛围参考，方便后续继续扩展街区、站台和活动路线。',
+    coverImage: { src: asset('city-rail-dynamics-banner.png'), alt: 'Minecraft 方块风城市轨道交通夜景' },
+    gallery: [{ src: asset('city-rail-dynamics-banner.png'), alt: '城市轨道交通建设截图' }],
     authorName: 'Builder',
-    category: '成员创作',
-    tags: ['建筑', '校园复刻'],
+    category: '服务器日常',
+    tags: ['建筑', '交通建设'],
     isFeatured: true,
     publishedAt: '2026-06-06T18:00:00+08:00'
   },

@@ -21,7 +21,7 @@
     </nav>
 
     <div class="header-actions">
-      <button class="search-button" type="button" aria-label="搜索">
+      <button ref="searchButton" class="search-button" type="button" aria-label="搜索" @click="openSearch">
         <img class="search-icon" src="/example-assets/search-magnifier-pixel.svg" alt="" aria-hidden="true">
         <span>搜索</span>
       </button>
@@ -30,6 +30,8 @@
         <span>登录</span>
       </NuxtLink>
     </div>
+
+    <SiteSearchOverlay v-model:open="isSearchOpen" @closed="focusSearchButton" />
   </header>
 </template>
 
@@ -42,6 +44,8 @@ const props = defineProps<{
 }>()
 
 const route = useRoute()
+const isSearchOpen = ref(false)
+const searchButton = ref<HTMLButtonElement | null>(null)
 
 function isActive(href: string) {
   if (href === '/') {
@@ -49,6 +53,14 @@ function isActive(href: string) {
   }
 
   return route.path.startsWith(href)
+}
+
+function openSearch() {
+  isSearchOpen.value = true
+}
+
+function focusSearchButton() {
+  searchButton.value?.focus()
 }
 
 void props
