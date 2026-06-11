@@ -14,6 +14,7 @@ export interface SiteInfo {
   shortName: string
   englishName: string
   logoText: string
+  logoImage?: string
   copyright: string
   credit: string
   socials: string[]

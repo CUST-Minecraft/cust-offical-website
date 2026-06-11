@@ -21,6 +21,7 @@ export const site: SiteInfo = {
   shortName: 'CUSTMC',
   englishName: 'CUST Minecraft Club',
   logoText: 'MC',
+  logoImage: asset('custmc-logo-header.png'),
   copyright: '© 2024 长春理工大学 Minecraft 社团 | CUST Minecraft Club. All Rights Reserved.',
   credit: 'Design with heart by CUSTMC',
   socials: ['QQ', '群', '帖', '微'],

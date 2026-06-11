@@ -1,7 +1,10 @@
 <template>
   <header class="site-header">
     <NuxtLink class="brand" to="/" :aria-label="site.name">
-      <span class="brand-mark">{{ site.logoText }}</span>
+      <span class="brand-mark" :class="{ 'has-logo-image': site.logoImage }">
+        <img v-if="site.logoImage" :src="site.logoImage" :alt="`${site.shortName} Logo`">
+        <template v-else>{{ site.logoText }}</template>
+      </span>
       <span>
         <strong>{{ site.name }}</strong>
         <small>{{ site.englishName }}</small>
