@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "member_profiles",
+  "info": {
+    "singularName": "member-profile",
+    "pluralName": "member-profiles",
+    "displayName": "Member Profile",
+    "description": "Public member profiles. Do not store sensitive identity information here."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "displayName": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "displayName",
+      "required": true
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "skinImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "group": {
+      "type": "string"
+    },
+    "roleTitle": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "text"
+    },
+    "works": {
+      "type": "json"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "isVisible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    }
+  }
+}

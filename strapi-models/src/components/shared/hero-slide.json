@@ -1,0 +1,93 @@
+{
+  "collectionName": "components_shared_hero_slides",
+  "info": {
+    "displayName": "Hero Slide",
+    "icon": "landscape"
+  },
+  "options": {},
+  "attributes": {
+    "background": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "contentAlign": {
+      "type": "enumeration",
+      "enum": [
+        "left",
+        "right",
+        "bottom"
+      ],
+      "required": true,
+      "default": "right"
+    },
+    "contentPosition": {
+      "type": "enumeration",
+      "enum": [
+        "left-top",
+        "right-top",
+        "left-center",
+        "right-center",
+        "left-bottom",
+        "right-bottom",
+        "bottom-bar"
+      ],
+      "default": "right-top"
+    },
+    "contentStyle": {
+      "type": "enumeration",
+      "enum": [
+        "full",
+        "minimal"
+      ],
+      "default": "minimal"
+    },
+    "textStyle": {
+      "type": "enumeration",
+      "enum": [
+        "outlined",
+        "bottomBar",
+        "compactOverlay"
+      ],
+      "required": true,
+      "default": "outlined"
+    },
+    "overlayStrength": {
+      "type": "enumeration",
+      "enum": [
+        "none",
+        "soft",
+        "medium",
+        "strong"
+      ],
+      "required": true,
+      "default": "medium"
+    },
+    "textWidth": {
+      "type": "enumeration",
+      "enum": [
+        "small",
+        "medium",
+        "large"
+      ],
+      "required": true,
+      "default": "medium"
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "light",
+        "dark"
+      ],
+      "required": true,
+      "default": "light"
+    },
+    "backgroundPosition": {
+      "type": "string",
+      "default": "center center"
+    }
+  }
+}

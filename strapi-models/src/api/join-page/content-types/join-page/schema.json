@@ -1,0 +1,61 @@
+{
+  "kind": "singleType",
+  "collectionName": "join_pages",
+  "info": {
+    "singularName": "join-page",
+    "pluralName": "join-pages",
+    "displayName": "Join Page",
+    "description": "Join guide, requirements, process, contacts, and FAQ."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "introContent": {
+      "type": "richtext",
+      "required": true
+    },
+    "requirements": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-item"
+    },
+    "processSteps": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.process-step"
+    },
+    "contactMethods": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.contact-method",
+      "required": true
+    },
+    "faqItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.faq-item"
+    },
+    "applicationUrl": {
+      "type": "string"
+    },
+    "serverJoinGuide": {
+      "type": "richtext"
+    }
+  }
+}

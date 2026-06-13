@@ -1,0 +1,44 @@
+{
+  "collectionName": "components_shared_server_infos",
+  "info": {
+    "displayName": "Server Info",
+    "icon": "server"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "string",
+      "required": true
+    },
+    "ip": {
+      "type": "string",
+      "required": true
+    },
+    "version": {
+      "type": "string",
+      "required": true
+    },
+    "mode": {
+      "type": "string",
+      "required": true
+    },
+    "online": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    },
+    "capacity": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    }
+  }
+}

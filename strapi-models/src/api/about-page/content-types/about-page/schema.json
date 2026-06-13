@@ -1,0 +1,45 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_pages",
+  "info": {
+    "singularName": "about-page",
+    "pluralName": "about-pages",
+    "displayName": "About Page",
+    "description": "Club introduction page content."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "groups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.group-info"
+    },
+    "serverSummary": {
+      "type": "richtext"
+    },
+    "joinGuide": {
+      "type": "richtext"
+    }
+  }
+}

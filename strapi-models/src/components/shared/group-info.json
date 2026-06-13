@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_group_infos",
+  "info": {
+    "displayName": "Group Info",
+    "icon": "users"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

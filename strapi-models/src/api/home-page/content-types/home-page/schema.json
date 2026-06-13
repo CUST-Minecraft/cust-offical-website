@@ -1,0 +1,86 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "Home Page",
+    "description": "Homepage hero, intro, featured content, gallery, and server overview."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroEyebrow": {
+      "type": "string",
+      "required": true
+    },
+    "heroTitleLines": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-item",
+      "required": true
+    },
+    "heroHighlightText": {
+      "type": "string",
+      "required": true
+    },
+    "heroSubtitle": {
+      "type": "string",
+      "required": true
+    },
+    "heroDescription": {
+      "type": "text",
+      "required": true
+    },
+    "heroSlides": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.hero-slide",
+      "required": true
+    },
+    "carouselInterval": {
+      "type": "integer",
+      "required": true,
+      "default": 6000
+    },
+    "intro": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.promo-section",
+      "required": true
+    },
+    "server": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.server-info",
+      "required": true
+    },
+    "featuredActivities": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::activity.activity"
+    },
+    "featuredAnnouncements": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::announcement.announcement"
+    },
+    "featuredPosts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::club-post.club-post"
+    },
+    "featuredMembers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::member-profile.member-profile"
+    },
+    "galleryItems": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::gallery-item.gallery-item"
+    }
+  }
+}

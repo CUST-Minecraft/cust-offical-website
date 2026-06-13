@@ -1,0 +1,102 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Setting",
+    "description": "Global website settings, navigation, service status, and external console links."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "shortName": {
+      "type": "string",
+      "required": true
+    },
+    "englishName": {
+      "type": "string",
+      "required": true
+    },
+    "logoText": {
+      "type": "string",
+      "required": true
+    },
+    "logoImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "favicon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "description": {
+      "type": "text"
+    },
+    "copyright": {
+      "type": "text",
+      "required": true
+    },
+    "credit": {
+      "type": "string",
+      "required": true
+    },
+    "socials": {
+      "type": "json"
+    },
+    "skinConsoleUrl": {
+      "type": "string",
+      "required": true
+    },
+    "documentCenterUrl": {
+      "type": "string"
+    },
+    "navigation": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.nav-link",
+      "required": true
+    },
+    "serviceStatusLabel": {
+      "type": "string",
+      "required": true,
+      "default": "Service Status"
+    },
+    "serviceStatusHref": {
+      "type": "string",
+      "required": true,
+      "default": "/maintenance"
+    },
+    "serviceStatusServices": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.service-status-item"
+    },
+    "maintenanceEnabled": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "maintenanceTitle": {
+      "type": "string"
+    },
+    "maintenanceMessage": {
+      "type": "text"
+    },
+    "maintenanceUntil": {
+      "type": "datetime"
+    }
+  }
+}

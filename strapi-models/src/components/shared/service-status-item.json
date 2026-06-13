@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_shared_service_status_items",
+  "info": {
+    "displayName": "Service Status Item",
+    "icon": "check"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "online",
+        "maintenance",
+        "offline"
+      ],
+      "required": true,
+      "default": "online"
+    }
+  }
+}

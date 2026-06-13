@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_shared_promo_sections",
+  "info": {
+    "displayName": "Promo Section",
+    "icon": "star"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "text",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "linkLabel": {
+      "type": "string",
+      "required": true
+    },
+    "tags": {
+      "type": "json"
+    }
+  }
+}

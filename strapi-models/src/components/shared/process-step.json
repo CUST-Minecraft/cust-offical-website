@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_process_steps",
+  "info": {
+    "displayName": "Process Step",
+    "icon": "list"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text",
+      "required": true
+    }
+  }
+}
