@@ -1,8 +1,20 @@
-import { activities } from '~/data/mock'
+import { activities as mockActivities } from '~/data/mock'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug')
-  const activity = activities.find((item) => item.slug === slug)
+  const activity = slug
+    ? await withMockFallback(
+        () => fetchActivityBySlug(slug),
+        () => mockActivities.find((item) => item.slug === slug) ?? null
+      )
+    : null
 
-  return activity ? ok(activity) : fail('NOT_FOUND', '活动不存在或未发布')
+  if (!activity) {
+    setResponseStatus(event, 404)
+    return fail('NOT_FOUND', '活动不存在或未发布')
+  }
+
+  setPublicCache(event, 'medium')
+
+  return ok(activity)
 })

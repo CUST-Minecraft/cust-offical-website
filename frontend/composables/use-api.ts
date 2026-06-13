@@ -5,9 +5,7 @@ import type {
   ApiResponse,
   HomeData,
   JoinPageData,
-  MemberAccount,
   MemberProfile,
-  MemberService,
   PostSummary,
   ServiceStatus,
   SiteInfo
@@ -20,80 +18,94 @@ interface SiteSettingsData {
 }
 
 export function useSiteSettings() {
-  return useAsyncData('site-settings', () => $fetch<ApiResponse<SiteSettingsData>>('/api/public/settings').then(unwrapApiResponse))
+  return usePublicAsyncData('site-settings', () => $fetch<ApiResponse<SiteSettingsData>>('/api/public/settings').then(unwrapApiResponse))
 }
 
 export function useHome() {
-  return useAsyncData('home', () => $fetch<ApiResponse<HomeData>>('/api/public/home').then(unwrapApiResponse))
+  return usePublicAsyncData('home', () => $fetch<ApiResponse<HomeData>>('/api/public/home').then(unwrapApiResponse))
 }
 
 export function useAboutPage() {
-  return useAsyncData('about', () => $fetch<ApiResponse<AboutPageData>>('/api/public/about').then(unwrapApiResponse))
+  return usePublicAsyncData('about', () => $fetch<ApiResponse<AboutPageData>>('/api/public/about').then(unwrapApiResponse))
 }
 
 export function useJoinPage() {
-  return useAsyncData('join', () => $fetch<ApiResponse<JoinPageData>>('/api/public/join').then(unwrapApiResponse))
+  return usePublicAsyncData('join', () => $fetch<ApiResponse<JoinPageData>>('/api/public/join').then(unwrapApiResponse))
 }
 
 export function useMembers() {
-  return useAsyncData('members', () => $fetch<ApiResponse<MemberProfile[]>>('/api/public/members').then(unwrapApiResponse))
+  return usePublicAsyncData('members', () => $fetch<ApiResponse<MemberProfile[]>>('/api/public/members').then(unwrapApiResponse))
 }
 
 export function useActivities(params: Ref<Record<string, string | number>> | Record<string, string | number> = {}) {
-  return useAsyncData(`activities:${JSON.stringify(unref(params))}`, () =>
+  return usePublicAsyncData(`activities:${JSON.stringify(unref(params))}`, () =>
     $fetch<ApiResponse<ActivitySummary[]>>('/api/public/activities', { query: unref(params) }).then(unwrapApiResponse)
   )
 }
 
 export function useActivityDetail(slug: string) {
-  return useAsyncData(`activity:${slug}`, () =>
+  return usePublicAsyncData(`activity:${slug}`, () =>
     $fetch<ApiResponse<ActivitySummary>>(`/api/public/activities/${slug}`).then(unwrapApiResponse)
   )
 }
 
 export function useAnnouncements(params: Ref<Record<string, string | number>> | Record<string, string | number> = {}) {
-  return useAsyncData(`announcements:${JSON.stringify(unref(params))}`, () =>
+  return usePublicAsyncData(`announcements:${JSON.stringify(unref(params))}`, () =>
     $fetch<ApiResponse<AnnouncementSummary[]>>('/api/public/announcements', { query: unref(params) }).then(unwrapApiResponse)
   )
 }
 
 export function useAnnouncementDetail(slug: string) {
-  return useAsyncData(`announcement:${slug}`, () =>
+  return usePublicAsyncData(`announcement:${slug}`, () =>
     $fetch<ApiResponse<AnnouncementSummary>>(`/api/public/announcements/${slug}`).then(unwrapApiResponse)
   )
 }
 
 export function usePosts(params: Ref<Record<string, string | number>> | Record<string, string | number> = {}) {
-  return useAsyncData(`posts:${JSON.stringify(unref(params))}`, () =>
+  return usePublicAsyncData(`posts:${JSON.stringify(unref(params))}`, () =>
     $fetch<ApiResponse<PostSummary[]>>('/api/public/posts', { query: unref(params) }).then(unwrapApiResponse)
   )
 }
 
 export function usePostDetail(slug: string) {
-  return useAsyncData(`post:${slug}`, () =>
+  return usePublicAsyncData(`post:${slug}`, () =>
     $fetch<ApiResponse<PostSummary>>(`/api/public/posts/${slug}`).then(unwrapApiResponse)
   )
 }
 
-export function useMemberMe() {
-  return useAsyncData('member-me', () => $fetch<ApiResponse<MemberAccount>>('/api/member/me').then(unwrapApiResponse))
-}
-
-export function useMemberServices() {
-  return useAsyncData('member-services', () => $fetch<ApiResponse<MemberService[]>>('/api/member/services').then(unwrapApiResponse))
-}
-
 export function useMaintenancePage() {
-  return useAsyncData('maintenance', () => $fetch<ApiResponse<Record<string, unknown>>>('/api/public/maintenance').then(unwrapApiResponse))
+  return usePublicAsyncData('maintenance', () => $fetch<ApiResponse<Record<string, unknown>>>('/api/public/maintenance').then(unwrapApiResponse))
+}
+
+async function usePublicAsyncData<T>(key: string, handler: () => Promise<T>) {
+  const result = await useAsyncData(key, handler)
+
+  if (result.error.value) {
+    throw result.error.value
+  }
+
+  return result
 }
 
 function unwrapApiResponse<T>(response: ApiResponse<T>): T {
   if (!response.success) {
     throw createError({
-      statusCode: response.error.code === 'NOT_FOUND' ? 404 : 500,
+      statusCode: statusCodeForApiError(response.error.code),
       statusMessage: response.error.message
     })
   }
 
   return response.data
+}
+
+function statusCodeForApiError(code: string) {
+  if (code === 'NOT_FOUND') {
+    return 404
+  }
+
+  if (code === 'MAINTENANCE') {
+    return 503
+  }
+
+  return 500
 }

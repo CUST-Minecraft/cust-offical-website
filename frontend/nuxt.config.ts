@@ -3,6 +3,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss'],
   css: ['~/assets/css/main.css'],
+  runtimeConfig: {
+    strapiUrl: 'http://localhost:1337',
+    strapiApiToken: '',
+    agentServiceUrl: ''
+  },
   app: {
     head: {
       htmlAttrs: { lang: 'zh-CN' },

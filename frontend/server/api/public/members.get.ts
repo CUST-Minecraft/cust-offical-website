@@ -1,3 +1,8 @@
-import { members } from '~/data/mock'
+import { members as mockMembers } from '~/data/mock'
 
-export default defineEventHandler(() => ok(members.filter((member) => member.isVisible)))
+export default defineEventHandler(async (event) => {
+  const data = await withMockFallback(() => fetchMembers(), () => mockMembers)
+  setPublicCache(event, 'medium')
+
+  return ok(data)
+})

@@ -1,15 +1,16 @@
-import { announcements } from '~/data/mock'
+import { announcements as mockAnnouncements } from '~/data/mock'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const page = Number(query.page ?? 1)
   const pageSize = Number(query.pageSize ?? 10)
   const category = typeof query.category === 'string' ? query.category : ''
-  const filtered = category
-    ? announcements.filter((announcement) => announcement.category === category)
-    : announcements
-  const sorted = [...filtered].sort((a, b) => Number(b.isPinned) - Number(a.isPinned))
-  const { data, meta } = paginate(sorted, page, pageSize)
+  const { data, meta } = await withMockFallback(
+    () => fetchAnnouncements({ page, pageSize, category }),
+    () => paginate(category ? mockAnnouncements.filter((announcement) => announcement.category === category) : mockAnnouncements, page, pageSize)
+  )
+
+  setPublicCache(event, 'short')
 
   return ok(data, meta)
 })

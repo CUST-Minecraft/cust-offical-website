@@ -5,9 +5,7 @@ import type {
   GalleryItem,
   HomeData,
   JoinPageData,
-  MemberAccount,
   MemberProfile,
-  MemberService,
   NavLink,
   PostSummary,
   ServiceStatus,
@@ -26,7 +24,7 @@ export const site: SiteInfo = {
   credit: 'Design with heart by CUSTMC',
   socials: ['QQ', '群', '帖', '微'],
   skinConsoleUrl: 'https://skin.custmc.example',
-  adminConsoleUrl: 'https://cms.custmc.example/admin'
+  documentCenterUrl: 'https://docs.custmc.example'
 }
 
 export const navigation: NavLink[] = [
@@ -44,7 +42,6 @@ export const serviceStatus: ServiceStatus = {
   href: '/maintenance',
   services: [
     { name: 'Minecraft 主服务器', status: 'online' },
-    { name: '资源下载站', status: 'online' },
     { name: 'QQ 群机器人', status: 'online' },
     { name: '在线地图', status: 'maintenance' }
   ]
@@ -334,27 +331,6 @@ export const joinPage: JoinPageData = {
   applicationUrl: 'https://wj.qq.com/join-example',
   serverJoinGuide: '服务器加入方式会在社团群内同步，第一阶段官网只展示说明和外部入口。'
 }
-
-export const currentMember: MemberAccount = {
-  displayName: 'MockSteve',
-  role: 'content-admin',
-  email: 'mock.steve@custmc.example'
-}
-
-export const memberServices: MemberService[] = [
-  {
-    label: '皮肤站控制台',
-    description: '管理自己的 Minecraft 皮肤和社团服务器外观资料。',
-    href: '/member/skin',
-    requiredRole: 'member'
-  },
-  {
-    label: '内容后台',
-    description: '维护活动、公告、动态、社员介绍和站点内容。',
-    href: '/member/admin',
-    requiredRole: 'content-admin'
-  }
-]
 
 export const maintenance = {
   title: '社团服务维护中',

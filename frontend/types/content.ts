@@ -19,7 +19,7 @@ export interface SiteInfo {
   credit: string
   socials: string[]
   skinConsoleUrl: string
-  adminConsoleUrl: string
+  documentCenterUrl?: string
 }
 
 export interface NavLink {
@@ -174,17 +174,4 @@ export interface JoinPageData {
   faqItems: { question: string; answer: string }[]
   applicationUrl?: string
   serverJoinGuide: string
-}
-
-export interface MemberAccount {
-  displayName: string
-  role: 'visitor' | 'member' | 'content-admin' | 'super-admin'
-  email: string
-}
-
-export interface MemberService {
-  label: string
-  description: string
-  href: string
-  requiredRole: MemberAccount['role']
 }

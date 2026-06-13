@@ -1,8 +1,20 @@
-import { announcements } from '~/data/mock'
+import { announcements as mockAnnouncements } from '~/data/mock'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug')
-  const announcement = announcements.find((item) => item.slug === slug)
+  const announcement = slug
+    ? await withMockFallback(
+        () => fetchAnnouncementBySlug(slug),
+        () => mockAnnouncements.find((item) => item.slug === slug) ?? null
+      )
+    : null
 
-  return announcement ? ok(announcement) : fail('NOT_FOUND', '公告不存在或未发布')
+  if (!announcement) {
+    setResponseStatus(event, 404)
+    return fail('NOT_FOUND', '公告不存在或未发布')
+  }
+
+  setPublicCache(event, 'medium')
+
+  return ok(announcement)
 })
