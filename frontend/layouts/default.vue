@@ -5,7 +5,7 @@
       <slot />
     </main>
     <SiteFooter v-if="site" :site="site" />
-    <FloatingServiceStatus v-if="serviceStatus" :status="serviceStatus" />
+    <FloatingServiceStatus v-if="serviceStatus" :status="serviceStatus" :document-center-url="site?.documentCenterUrl" />
   </div>
 </template>
 

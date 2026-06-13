@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="扁平书架文档中心">
+  <rect width="32" height="32" fill="none"/>
+
+  <rect x="2" y="3" width="28" height="27" fill="#b37a3a"/>
+  <rect x="4" y="5" width="24" height="23" fill="#6f4828"/>
+
+  <rect x="5" y="6" width="22" height="4" fill="#b98648"/>
+  <rect x="5" y="17" width="22" height="4" fill="#b98648"/>
+  <rect x="5" y="27" width="22" height="1" fill="#3b2416"/>
+
+  <rect x="6" y="10" width="4" height="7" fill="#b92d31"/>
+  <rect x="10" y="10" width="2" height="7" fill="#cf9d35"/>
+  <rect x="12" y="10" width="4" height="7" fill="#255aa5"/>
+  <rect x="16" y="10" width="3" height="7" fill="#3f8f52"/>
+  <rect x="19" y="10" width="4" height="7" fill="#8e2430"/>
+  <rect x="23" y="10" width="3" height="7" fill="#267b92"/>
+
+  <rect x="6" y="21" width="3" height="6" fill="#2b7f94"/>
+  <rect x="9" y="21" width="4" height="6" fill="#c9a43d"/>
+  <rect x="13" y="21" width="3" height="6" fill="#244f9b"/>
+  <rect x="16" y="21" width="4" height="6" fill="#af2c32"/>
+  <rect x="20" y="21" width="3" height="6" fill="#4e9842"/>
+  <rect x="23" y="21" width="3" height="6" fill="#163e78"/>
+
+  <rect x="6" y="6" width="9" height="1" fill="#d5aa63"/>
+  <rect x="18" y="6" width="6" height="1" fill="#d5aa63"/>
+  <rect x="6" y="17" width="8" height="1" fill="#d5aa63"/>
+  <rect x="17" y="17" width="7" height="1" fill="#d5aa63"/>
+
+  <rect x="4" y="5" width="24" height="1" fill="#d5aa63"/>
+  <rect x="4" y="5" width="1" height="23" fill="#9b6738"/>
+  <rect x="27" y="5" width="1" height="23" fill="#2a1a11"/>
+  <rect x="4" y="28" width="24" height="1" fill="#2a1a11"/>
+
+  <rect x="8" y="11" width="1" height="5" fill="#e0584d" opacity=".7"/>
+  <rect x="14" y="11" width="1" height="5" fill="#6aa0ff" opacity=".65"/>
+  <rect x="24" y="11" width="1" height="5" fill="#5fc6d1" opacity=".65"/>
+  <rect x="10" y="22" width="1" height="4" fill="#f0cb5d" opacity=".65"/>
+  <rect x="18" y="22" width="1" height="4" fill="#e05b5b" opacity=".65"/>
+</svg>

@@ -41,11 +41,13 @@
             <template v-if="groupedResults.length">
               <section v-for="group in groupedResults" :key="group.type" class="search-result-group">
                 <h3>{{ group.type }}</h3>
-                <NuxtLink
+                <component
+                  :is="resultComponent(result)"
                   v-for="result in group.items"
-                  :key="`${result.type}-${result.href}`"
+                  :key="resultKey(result)"
                   class="search-result-item"
-                  :to="result.href"
+                  :class="{ 'is-disabled': result.disabled }"
+                  v-bind="resultLinkAttrs(result)"
                   @click="closeSearch"
                 >
                   <span class="search-result-badge">{{ result.type }}</span>
@@ -53,7 +55,7 @@
                     <strong>{{ result.title }}</strong>
                     <small>{{ result.description }}</small>
                   </span>
-                </NuxtLink>
+                </component>
               </section>
             </template>
 
@@ -69,14 +71,13 @@
 </template>
 
 <script setup lang="ts">
-import { activities, announcements, members, navigation, posts, serviceStatus, site } from '~/data/mock'
-
 interface SearchResult {
   type: string
   title: string
   description: string
   href: string
   keywords: string[]
+  disabled?: boolean
 }
 
 const props = defineProps<{ open: boolean }>()
@@ -91,58 +92,86 @@ const dialog = ref<HTMLElement | null>(null)
 const searchInput = ref<HTMLInputElement | null>(null)
 const closeButton = ref<HTMLButtonElement | null>(null)
 const suggestions = ['建筑', '服务器', '加入我们', '公告', '红石']
+const { data: settings } = await useSiteSettings()
+const { data: activities } = await useActivities({ page: 1, pageSize: 20 })
+const { data: announcements } = await useAnnouncements({ page: 1, pageSize: 20 })
+const { data: posts } = await usePosts({ page: 1, pageSize: 20 })
+const { data: members } = await useMembers()
 
-const searchIndex = computed<SearchResult[]>(() => [
-  ...navigation.map((item) => ({
-    type: '入口',
-    title: item.label,
-    description: getEntryDescription(item.href),
-    href: item.href,
-    keywords: [item.label, item.href]
-  })),
-  {
-    type: '入口',
-    title: '皮肤站',
-    description: '进入社员皮肤管理与个人形象设置。',
-    href: '/member/skin',
-    keywords: ['皮肤站', '皮肤', '社员中心', site.skinConsoleUrl]
-  },
-  {
-    type: '入口',
-    title: '社团服务状态',
-    description: serviceStatus.services.map((item) => item.name).join(' / '),
-    href: serviceStatus.href,
-    keywords: ['服务状态', '服务器', '维护', '在线', ...serviceStatus.services.map((item) => item.name)]
-  },
-  ...activities.map((activity) => ({
-    type: '活动',
-    title: activity.title,
-    description: activity.summary,
-    href: `/activities/${activity.slug}`,
-    keywords: [activity.title, activity.summary, activity.location ?? '', activity.status]
-  })),
-  ...announcements.map((announcement) => ({
-    type: '公告',
-    title: announcement.title,
-    description: announcement.summary,
-    href: `/announcements/${announcement.slug}`,
-    keywords: [announcement.title, announcement.summary, announcement.category]
-  })),
-  ...posts.map((post) => ({
-    type: '动态',
-    title: post.title,
-    description: post.summary,
-    href: `/posts/${post.slug}`,
-    keywords: [post.title, post.summary, post.category, post.authorName, ...post.tags]
-  })),
-  ...members.map((member) => ({
-    type: '社员',
-    title: member.displayName,
-    description: `${member.group} · ${member.roleTitle}`,
-    href: `/members#${member.slug}`,
-    keywords: [member.displayName, member.group, member.roleTitle, member.bio, ...member.works]
-  }))
-])
+const searchIndex = computed<SearchResult[]>(() => {
+  const skinConsoleUrl = settings.value?.site.skinConsoleUrl
+  const documentCenterUrl = settings.value?.site.documentCenterUrl?.trim() ?? ''
+
+  return [
+    ...(settings.value?.navigation ?? []).map((item) => ({
+      type: '入口',
+      title: item.label,
+      description: getEntryDescription(item.href),
+      href: item.href,
+      keywords: [item.label, item.href]
+    })),
+    ...(skinConsoleUrl
+      ? [
+          {
+            type: '入口',
+            title: '皮肤站',
+            description: '进入独立皮肤站，管理 Minecraft 皮肤和个人形象。',
+            href: skinConsoleUrl,
+            keywords: ['皮肤站', '皮肤', skinConsoleUrl]
+          }
+        ]
+      : []),
+    {
+      type: '入口',
+      title: '文档中心',
+      description: documentCenterUrl ? '打开社团文档中心，查看规约、说明和协作资料。' : '文档中心入口暂未配置。',
+      href: documentCenterUrl,
+      keywords: ['文档中心', '文档', '资料', '规约', '说明', documentCenterUrl].filter(Boolean),
+      disabled: !documentCenterUrl
+    },
+    {
+      type: '入口',
+      title: '社团服务状态',
+      description: (settings.value?.serviceStatus.services ?? []).map((item) => item.name).join(' / '),
+      href: settings.value?.serviceStatus.href ?? '/maintenance',
+      keywords: [
+        '服务状态',
+        '服务器',
+        '维护',
+        '在线',
+        ...(settings.value?.serviceStatus.services ?? []).map((item) => item.name)
+      ]
+    },
+    ...(activities.value ?? []).map((activity) => ({
+      type: '活动',
+      title: activity.title,
+      description: activity.summary,
+      href: `/activities/${activity.slug}`,
+      keywords: [activity.title, activity.summary, activity.location ?? '', activity.status]
+    })),
+    ...(announcements.value ?? []).map((announcement) => ({
+      type: '公告',
+      title: announcement.title,
+      description: announcement.summary,
+      href: `/announcements/${announcement.slug}`,
+      keywords: [announcement.title, announcement.summary, announcement.category]
+    })),
+    ...(posts.value ?? []).map((post) => ({
+      type: '动态',
+      title: post.title,
+      description: post.summary,
+      href: `/posts/${post.slug}`,
+      keywords: [post.title, post.summary, post.category, post.authorName, ...post.tags]
+    })),
+    ...(members.value ?? []).map((member) => ({
+      type: '社员',
+      title: member.displayName,
+      description: `${member.group} · ${member.roleTitle}`,
+      href: `/members#${member.slug}`,
+      keywords: [member.displayName, member.group, member.roleTitle, member.bio, ...member.works]
+    }))
+  ]
+})
 
 const results = computed(() => {
   const keyword = normalize(query.value)
@@ -211,11 +240,19 @@ function closeSearch() {
 function goFirstResult() {
   const first = results.value[0]
 
-  if (!first) {
+  if (!first || first.disabled) {
     return
   }
 
   closeSearch()
+
+  if (isExternalLink(first.href)) {
+    if (import.meta.client) {
+      window.location.href = first.href
+    }
+    return
+  }
+
   navigateTo(first.href)
 }
 
@@ -252,6 +289,42 @@ function getScore(result: SearchResult, keyword: string) {
 
 function normalize(value: string) {
   return value.toLowerCase().replace(/\s+/g, '')
+}
+
+function isExternalLink(href: string) {
+  return /^https?:\/\//.test(href)
+}
+
+function resultComponent(result: SearchResult) {
+  if (result.disabled) {
+    return 'button'
+  }
+
+  return isExternalLink(result.href) ? 'a' : 'NuxtLink'
+}
+
+function resultKey(result: SearchResult) {
+  return `${result.type}-${result.title}-${result.href || 'disabled'}`
+}
+
+function resultLinkAttrs(result: SearchResult) {
+  if (result.disabled) {
+    return {
+      type: 'button',
+      disabled: true,
+      'aria-disabled': 'true'
+    }
+  }
+
+  if (isExternalLink(result.href)) {
+    return {
+      href: result.href,
+      target: '_blank',
+      rel: 'noopener noreferrer'
+    }
+  }
+
+  return { to: result.href }
 }
 
 function getEntryDescription(href: string) {
