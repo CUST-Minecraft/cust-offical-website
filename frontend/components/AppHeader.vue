@@ -28,10 +28,17 @@
         <img class="search-icon" src="/example-assets/search-magnifier-pixel.svg" alt="" aria-hidden="true">
         <span>搜索</span>
       </button>
-      <NuxtLink class="login-button" to="/login" aria-label="登录">
-        <img class="login-icon" src="/example-assets/login-portal-obsidian.svg" alt="" aria-hidden="true">
-        <span>登录</span>
-      </NuxtLink>
+      <a
+        v-if="site.skinConsoleUrl"
+        class="skin-button"
+        :href="site.skinConsoleUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="打开皮肤站"
+      >
+        <img class="skin-icon" src="/example-assets/login-portal-obsidian.svg" alt="" aria-hidden="true">
+        <span>皮肤站</span>
+      </a>
     </div>
 
     <SiteSearchOverlay v-model:open="isSearchOpen" @closed="focusSearchButton" />
