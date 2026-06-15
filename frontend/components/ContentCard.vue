@@ -1,5 +1,5 @@
 <template>
-  <article class="content-card">
+  <article class="content-card motion-reveal">
     <NuxtLink :to="to" class="content-card-image" :style="image ? { backgroundImage: `url('${image.src}')` } : undefined">
       <span v-if="badge">{{ badge }}</span>
     </NuxtLink>

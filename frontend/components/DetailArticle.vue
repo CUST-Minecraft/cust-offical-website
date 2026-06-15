@@ -7,9 +7,7 @@
     <h1>{{ title }}</h1>
     <p class="detail-summary">{{ summary }}</p>
     <img v-if="image" :src="image.src" :alt="image.alt">
-    <div class="rich-text">
-      <p>{{ content }}</p>
-    </div>
+    <RichTextRenderer :content="content" />
     <slot />
   </article>
 </template>
