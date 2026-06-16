@@ -26,9 +26,14 @@
         "images"
       ]
     },
-    "content": {
-      "type": "richtext",
+    "sections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.about-section",
       "required": true
+    },
+    "content": {
+      "type": "richtext"
     },
     "groups": {
       "type": "component",

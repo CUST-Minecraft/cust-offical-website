@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_about_about_section_links",
+  "info": {
+    "displayName": "About Section Link",
+    "icon": "link"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "href": {
+      "type": "string",
+      "required": true
+    },
+    "code": {
+      "type": "string"
+    },
+    "openInNewTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

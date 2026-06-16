@@ -5,7 +5,7 @@
     "singularName": "site-setting",
     "pluralName": "site-settings",
     "displayName": "Site Setting",
-    "description": "Global website settings, navigation, service status, and external console links."
+    "description": "Global website identity, navigation, SEO, and footer foundation."
   },
   "options": {
     "draftAndPublish": false
@@ -53,50 +53,16 @@
       "type": "string",
       "required": true
     },
-    "socials": {
-      "type": "json"
-    },
-    "skinConsoleUrl": {
-      "type": "string",
-      "required": true
-    },
-    "documentCenterUrl": {
-      "type": "string"
+    "footerAboutLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.footer-link"
     },
     "navigation": {
       "type": "component",
       "repeatable": true,
       "component": "shared.nav-link",
       "required": true
-    },
-    "serviceStatusLabel": {
-      "type": "string",
-      "required": true,
-      "default": "Service Status"
-    },
-    "serviceStatusHref": {
-      "type": "string",
-      "required": true,
-      "default": "/maintenance"
-    },
-    "serviceStatusServices": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.service-status-item"
-    },
-    "maintenanceEnabled": {
-      "type": "boolean",
-      "required": true,
-      "default": false
-    },
-    "maintenanceTitle": {
-      "type": "string"
-    },
-    "maintenanceMessage": {
-      "type": "text"
-    },
-    "maintenanceUntil": {
-      "type": "datetime"
     }
   }
 }

@@ -1,0 +1,45 @@
+{
+  "kind": "singleType",
+  "collectionName": "maintenance_pages",
+  "info": {
+    "singularName": "maintenance-page",
+    "pluralName": "maintenance-pages",
+    "displayName": "Maintenance Page",
+    "description": "Maintenance mode copy, expected recovery time, and public service status."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "title": {
+      "type": "string"
+    },
+    "message": {
+      "type": "text"
+    },
+    "until": {
+      "type": "datetime"
+    },
+    "serviceStatusLabel": {
+      "type": "string",
+      "required": true,
+      "default": "社团服务状态"
+    },
+    "serviceStatusHref": {
+      "type": "string",
+      "required": true,
+      "default": "/maintenance"
+    },
+    "serviceStatusServices": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.service-status-item"
+    }
+  }
+}

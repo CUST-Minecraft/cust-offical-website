@@ -66,6 +66,28 @@
       "required": true,
       "default": "medium"
     },
+    "overlayMode": {
+      "type": "enumeration",
+      "enum": [
+        "side",
+        "local",
+        "corner",
+        "edge",
+        "none"
+      ],
+      "required": true,
+      "default": "side"
+    },
+    "overlayAnchor": {
+      "type": "enumeration",
+      "enum": [
+        "left-top",
+        "right-top",
+        "left-bottom",
+        "right-bottom"
+      ],
+      "default": "right-top"
+    },
     "textWidth": {
       "type": "enumeration",
       "enum": [
@@ -88,6 +110,23 @@
     "backgroundPosition": {
       "type": "string",
       "default": "center center"
+    },
+    "photoLocation": {
+      "type": "string"
+    },
+    "photoAuthor": {
+      "type": "string"
+    },
+    "photoCaptionPosition": {
+      "type": "enumeration",
+      "enum": [
+        "auto",
+        "left-top",
+        "right-top",
+        "left-bottom",
+        "right-bottom"
+      ],
+      "default": "auto"
     }
   }
 }

@@ -1,0 +1,96 @@
+{
+  "kind": "collectionType",
+  "collectionName": "external_services",
+  "info": {
+    "singularName": "external-service",
+    "pluralName": "external-services",
+    "displayName": "External Service",
+    "description": "Public external service entries and service launch points."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "key": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "enumeration",
+      "enum": [
+        "skin",
+        "docs",
+        "mua",
+        "agent",
+        "external"
+      ],
+      "required": true,
+      "default": "external"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "official",
+        "partner",
+        "tool"
+      ],
+      "required": true,
+      "default": "official"
+    },
+    "enabled": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "disabledReason": {
+      "type": "text"
+    },
+    "external": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "openInNewTab": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "showInHeader": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "showInWorkbench": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "showInFooter": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "showInSearch": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "sortOrder": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    }
+  }
+}

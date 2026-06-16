@@ -17,14 +17,43 @@ export interface SiteInfo {
   logoImage?: string
   copyright: string
   credit: string
-  socials: string[]
-  skinConsoleUrl: string
-  documentCenterUrl?: string
+  footerAboutLinks: FooterLink[]
+}
+
+export type FooterLinkIcon = 'skin' | 'docs' | 'mua' | 'about' | 'join' | 'activity' | 'member' | 'agent' | 'external'
+
+export interface FooterLink {
+  label: string
+  href: string
+  icon?: FooterLinkIcon
+  external?: boolean
+  disabled?: boolean
 }
 
 export interface NavLink {
   label: string
   href: string
+}
+
+export type ExternalServiceIcon = 'skin' | 'docs' | 'mua' | 'agent' | 'external'
+export type ExternalServiceCategory = 'official' | 'partner' | 'tool'
+
+export interface ExternalService {
+  name: string
+  key: string
+  summary: string
+  url?: string
+  icon: ExternalServiceIcon
+  category: ExternalServiceCategory
+  enabled: boolean
+  disabledReason?: string
+  external: boolean
+  openInNewTab: boolean
+  showInHeader: boolean
+  showInWorkbench: boolean
+  showInFooter: boolean
+  showInSearch: boolean
+  sortOrder: number
 }
 
 export interface HeroSlide {
@@ -34,9 +63,14 @@ export interface HeroSlide {
   contentStyle?: 'full' | 'minimal'
   textStyle: 'outlined' | 'bottomBar' | 'compactOverlay'
   overlayStrength: 'none' | 'soft' | 'medium' | 'strong'
+  overlayMode: 'side' | 'local' | 'corner' | 'edge' | 'none'
+  overlayAnchor?: 'left-top' | 'right-top' | 'left-bottom' | 'right-bottom'
   textWidth: 'small' | 'medium' | 'large'
   tone: 'light' | 'dark'
   backgroundPosition: string
+  photoLocation: string
+  photoAuthor: string
+  photoCaptionPosition: 'auto' | 'left-top' | 'right-top' | 'left-bottom' | 'right-bottom'
 }
 
 export interface HomeHero {
@@ -139,9 +173,18 @@ export interface ServiceStatus {
   services: { name: string; status: 'online' | 'maintenance' | 'offline' }[]
 }
 
+export interface MaintenancePageData {
+  title: string
+  message: string
+  until?: string
+  maintenanceEnabled: boolean
+  serviceStatus: ServiceStatus
+}
+
 export interface HomeData {
   site: SiteInfo
   navigation: NavLink[]
+  externalServices: ExternalService[]
   hero: HomeHero
   intro: PromoSection
   activities: ActivitySummary[]
@@ -153,14 +196,60 @@ export interface HomeData {
   serviceStatus: ServiceStatus
 }
 
+export type AboutSectionType = 'hero' | 'origin' | 'actions' | 'directions' | 'next'
+
+export interface AboutSectionItem {
+  title: string
+  summary: string
+  code?: string
+  icon?: string
+  image?: ImageRef
+  sortOrder: number
+  enabled: boolean
+}
+
+export interface AboutSectionLink {
+  label: string
+  summary?: string
+  href: string
+  code?: string
+  openInNewTab: boolean
+  sortOrder: number
+  enabled: boolean
+}
+
+export interface AboutSection {
+  sectionType: AboutSectionType
+  eyebrow?: string
+  title: string
+  summary?: string
+  content?: string
+  image?: ImageRef
+  items: AboutSectionItem[]
+  links: AboutSectionLink[]
+  sortOrder: number
+  enabled: boolean
+}
+
 export interface AboutPageData {
   title: string
   summary: string
   coverImage: ImageRef
+  sections: AboutSection[]
   content: string
   groups: { name: string; summary: string }[]
   serverSummary: string
   joinGuide: string
+}
+
+export interface JoinProcessStep {
+  title: string
+  summary: string
+  items: string[]
+  image?: ImageRef
+  imageCaption?: string
+  primaryActionLabel?: string
+  primaryActionUrl?: string
 }
 
 export interface JoinPageData {
@@ -169,7 +258,7 @@ export interface JoinPageData {
   coverImage: ImageRef
   introContent: string
   requirements: string[]
-  processSteps: { title: string; summary: string }[]
+  processSteps: JoinProcessStep[]
   contactMethods: { label: string; value: string }[]
   faqItems: { question: string; answer: string }[]
   applicationUrl?: string

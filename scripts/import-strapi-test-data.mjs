@@ -14,6 +14,7 @@ const asset = (name) => path.join(assetRoot, name)
 const imageMap = {
   logo: 'custmc-logo-header.png',
   campusHero: 'cust-campus-hero-wide.png',
+  campusOverviewHero: 'cust-campus-overview-hero.png',
   gateHero: 'cust-main-gate-hero.png',
   gateAtmospheric: 'cust-main-gate-hero-atmospheric.png',
   intro: 'section-intro-pixel.png',
@@ -30,9 +31,11 @@ const site = {
   logoText: 'MC',
   copyright: '© 2024 长春理工大学 Minecraft 社团 | CUST Minecraft Club. All Rights Reserved.',
   credit: 'Design with heart by CUSTMC',
-  socials: ['QQ', '群', '帖', '微'],
-  skinConsoleUrl: 'https://skin.custmc.example',
-  documentCenterUrl: 'https://docs.custmc.example',
+  footerAboutLinks: [
+    { label: '社团介绍', href: '/about', icon: 'about' },
+    { label: '社团活动', href: '/activities', icon: 'activity' },
+    { label: '加入我们', href: '/join', icon: 'join' }
+  ],
   navigation: [
     { label: '首页', href: '/' },
     { label: '社团介绍', href: '/about' },
@@ -41,7 +44,76 @@ const site = {
     { label: '社团动态', href: '/posts' },
     { label: '社员介绍', href: '/members' },
     { label: '加入我们', href: '/join' }
-  ],
+  ]
+}
+
+const externalServices = [
+  {
+    name: '皮肤站',
+    key: 'skin',
+    summary: '进入独立皮肤站，管理 Minecraft 皮肤和个人形象。',
+    url: 'https://skin.custmc.example',
+    icon: 'skin',
+    category: 'official',
+    enabled: true,
+    external: true,
+    openInNewTab: true,
+    showInHeader: true,
+    showInWorkbench: false,
+    showInFooter: false,
+    showInSearch: true,
+    sortOrder: 10
+  },
+  {
+    name: '文档中心',
+    key: 'docs',
+    summary: '查看社团规约、服务器说明和协作资料。',
+    url: 'https://docs.custmc.example',
+    icon: 'docs',
+    category: 'official',
+    enabled: true,
+    external: true,
+    openInNewTab: true,
+    showInHeader: false,
+    showInWorkbench: true,
+    showInFooter: false,
+    showInSearch: true,
+    sortOrder: 20
+  },
+  {
+    name: 'MUA 官网',
+    key: 'mua',
+    summary: '访问 Minecraft University Alliance 官网。',
+    url: 'https://www.mualliance.cn/',
+    icon: 'mua',
+    category: 'partner',
+    enabled: true,
+    external: true,
+    openInNewTab: true,
+    showInHeader: false,
+    showInWorkbench: false,
+    showInFooter: true,
+    showInSearch: false,
+    sortOrder: 30
+  },
+  {
+    name: '悦灵助手',
+    key: 'agent',
+    summary: '社团服务工作台中的轻量问答入口。',
+    icon: 'agent',
+    category: 'tool',
+    enabled: true,
+    external: false,
+    openInNewTab: false,
+    showInHeader: false,
+    showInWorkbench: true,
+    showInFooter: false,
+    showInSearch: true,
+    sortOrder: 40
+  }
+]
+
+const maintenancePage = {
   serviceStatusLabel: '社团服务状态',
   serviceStatusHref: '/maintenance',
   serviceStatusServices: [
@@ -49,10 +121,10 @@ const site = {
     { name: 'QQ 群机器人', status: 'online' },
     { name: '在线地图', status: 'maintenance' }
   ],
-  maintenanceEnabled: false,
-  maintenanceTitle: '社团服务维护中',
-  maintenanceMessage: '部分服务正在维护，公开页面仍可使用缓存内容预览。',
-  maintenanceUntil: '2026-06-10T23:30:00+08:00'
+  enabled: false,
+  title: '社团服务维护中',
+  message: '部分服务正在维护，公开页面仍可使用缓存内容预览。',
+  until: '2026-06-10T23:30:00+08:00'
 }
 
 const activities = [
@@ -249,27 +321,71 @@ const aboutPage = {
 
 const joinPage = {
   title: '加入我们',
-  summary: '带上你的想法，进入这个属于长理的方块世界。',
+  summary: '社团长期开放加入，从一个方向开始，慢慢进入属于长理的方块世界。',
   coverImage: 'campusHero',
-  introContent: '无论你擅长建筑、红石、服务器管理、活动策划，还是只是想找一群人一起玩 Minecraft，都可以从这里开始。',
+  introContent: '不需要等招新季。无论你擅长建筑、红石、服务器协作、活动策划，还是只是想找一群人一起玩 Minecraft，都可以从这里开始。',
   requirements: [
     '热爱 Minecraft 或愿意了解方块创作',
     '遵守服务器规则和社团协作约定',
     '不在公开资料中提交真实姓名、学号、手机号等敏感信息'
   ],
   processSteps: [
-    { title: '联系社团', summary: '通过 QQ 群或社团联系人了解当前招新安排。' },
-    { title: '阅读规则', summary: '确认服务器玩法、白名单和公共区域建设规范。' },
-    { title: '进入服务器', summary: '完成基础确认后进入服务器，选择你想参与的方向。' }
+    {
+      title: '选择你想以什么身份加入',
+      summary: '不需要一开始就很强。先从感兴趣的方向出发，后续也可以慢慢切换。',
+      items: ['建筑共创：校园复刻、主城建设、公共设施', '红石机制：机关、自动化、小游戏和互动装置', '活动策划：建筑赛、生存挑战、合影和节日活动', '服务器协作：地图整理、新手区和规则维护', '内容记录或轻松游玩：截图、动态、参观和一起玩'],
+      image: 'members',
+      imageCaption: '先选择一个舒服的起点，不用把自己固定在一个分组里。',
+      primaryActionLabel: '了解社团',
+      primaryActionUrl: '/about'
+    },
+    {
+      title: '选择加入方式',
+      summary: '可以直接联系社团，也可以先看看近期活动和动态，确认这里是不是你想加入的地方。',
+      items: ['QQ群：适合直接进入社群了解当前安排', '外部申请表：适合留下加入意向和感兴趣方向', '社团联系人：适合线下或熟人引导', '先看看活动：适合还在观望的新同学'],
+      image: 'campusHero',
+      imageCaption: '长期开放加入，不需要等某个固定招新窗口。',
+      primaryActionLabel: '看看活动',
+      primaryActionUrl: '/activities'
+    },
+    {
+      title: '了解基本规则',
+      summary: '进入社团和服务器前，需要先理解公共空间、白名单和公开资料隐私边界。',
+      items: ['尊重其他成员的作品和公共区域', '遵守服务器规则、活动规则和协作约定', '服务器地址、版本和白名单方式以社团群内同步为准', '公开资料不展示真实姓名、学号、手机号等敏感信息'],
+      image: 'intro',
+      imageCaption: '规则不是门槛，是大家一起维护舒服空间的基础。'
+    },
+    {
+      title: '联系社团并完成确认',
+      summary: '说明你的加入意向和感兴趣方向，管理员或社团成员会同步当前加入安排。',
+      items: ['确认你的 Minecraft 版本和昵称信息', '了解白名单、群内规则和近期活动安排', '遇到进服问题时通过社团群或联系人继续沟通'],
+      image: 'gateHero',
+      imageCaption: '完成基础确认后，再进入服务器会轻松很多。',
+      primaryActionLabel: '填写加入意向',
+      primaryActionUrl: 'https://wj.qq.com/join-example'
+    },
+    {
+      title: '进入社团，开始参与',
+      summary: '加入后可以先参观服务器、参加一次活动，或者从一个小型共建任务开始。',
+      items: ['先逛一圈服务器和新手区', '参加一次活动或合影', '认领一个小建筑、小记录或小整理任务', '熟悉后再选择更长期的参与方向'],
+      image: 'gallery',
+      imageCaption: '从一块小方块开始，也算正式进入这个世界。',
+      primaryActionLabel: '查看社团动态',
+      primaryActionUrl: '/posts'
+    }
   ],
   contactMethods: [
-    { label: 'QQ 群', value: '123456789' },
-    { label: '社团邮箱', value: 'custmc@example.com' }
+    { label: 'QQ 群', value: '以社团公告和群内同步为准' },
+    { label: '外部申请表', value: 'https://wj.qq.com/join-example' }
   ],
   faqItems: [
+    { question: '现在不是招新季，也可以加入吗？', answer: '可以。社团长期开放加入，你可以随时通过页面中的加入方式了解当前安排。' },
     { question: '完全新手可以加入吗？', answer: '可以。社团会提供基础玩法、服务器规则和简单建筑协作说明。' },
-    { question: '必须参加固定活动吗？', answer: '不强制，但欢迎参加例会、共建周和主题活动。' },
-    { question: '官网里会展示真实身份吗？', answer: '第一阶段公开资料只展示昵称、分组、作品和简介。' }
+    { question: '不会建筑或红石可以吗？', answer: '可以。你可以从参观、轻松游玩、内容记录、活动参与或小型共建开始。' },
+    { question: '加入后必须经常在线吗？', answer: '不强制。你可以按照自己的时间参与活动、共建或服务器日常。' },
+    { question: '服务器需要白名单吗？', answer: '需要。服务器地址、版本和白名单方式会在社团群内同步。' },
+    { question: '官网里会展示真实身份吗？', answer: '不会。第一阶段公开资料只展示昵称、分组、作品和自愿提供的简介。' },
+    { question: '遇到进服问题怎么办？', answer: '可以在社团群内说明遇到的问题，管理员或熟悉服务器的成员会协助排查。' }
   ],
   applicationUrl: 'https://wj.qq.com/join-example',
   serverJoinGuide: '服务器加入方式会在社团群内同步，第一阶段官网只展示说明和外部入口。'
@@ -482,6 +598,12 @@ async function main() {
       logoImage: media.logo.id
     }, { publish: false })
 
+    await upsertSingle(strapi, 'api::maintenance-page.maintenance-page', maintenancePage, { publish: false })
+
+    for (const service of externalServices) {
+      await upsertBy(strapi, 'api::external-service.external-service', { key: service.key }, service)
+    }
+
     await upsertSingle(strapi, 'api::about-page.about-page', {
       ...aboutPage,
       coverImage: media[aboutPage.coverImage].id
@@ -490,7 +612,12 @@ async function main() {
     await upsertSingle(strapi, 'api::join-page.join-page', {
       ...joinPage,
       coverImage: media[joinPage.coverImage].id,
-      requirements: joinPage.requirements.map((value) => ({ value }))
+      requirements: joinPage.requirements.map((value) => ({ value })),
+      processSteps: joinPage.processSteps.map((step) => ({
+        ...step,
+        items: step.items.map((value) => ({ value })),
+        image: media[step.image].id
+      }))
     })
 
     await upsertSingle(strapi, 'api::home-page.home-page', {
@@ -507,9 +634,13 @@ async function main() {
           contentStyle: 'minimal',
           textStyle: 'outlined',
           overlayStrength: 'medium',
+          overlayMode: 'side',
           textWidth: 'medium',
           tone: 'light',
-          backgroundPosition: 'center 46%'
+          backgroundPosition: 'center 46%',
+          photoLocation: '长春理工大学校园',
+          photoAuthor: 'CUSTMC 摄影组',
+          photoCaptionPosition: 'auto'
         },
         {
           background: media.gateAtmospheric.id,
@@ -518,9 +649,29 @@ async function main() {
           contentStyle: 'minimal',
           textStyle: 'compactOverlay',
           overlayStrength: 'soft',
+          overlayMode: 'edge',
           textWidth: 'medium',
           tone: 'light',
-          backgroundPosition: 'center 50%'
+          backgroundPosition: 'center 50%',
+          photoLocation: '长春理工大学正门',
+          photoAuthor: 'CUSTMC 摄影组',
+          photoCaptionPosition: 'auto'
+        },
+        {
+          background: media.campusOverviewHero.id,
+          contentAlign: 'right',
+          contentPosition: 'right-top',
+          contentStyle: 'minimal',
+          textStyle: 'outlined',
+          overlayStrength: 'soft',
+          overlayMode: 'corner',
+          overlayAnchor: 'right-top',
+          textWidth: 'medium',
+          tone: 'light',
+          backgroundPosition: 'center 50%',
+          photoLocation: '',
+          photoAuthor: '',
+          photoCaptionPosition: 'auto'
         }
       ],
       carouselInterval: 6000,
@@ -551,6 +702,7 @@ async function main() {
     const counts = {}
     for (const [label, uid] of Object.entries({
       tags: 'api::tag.tag',
+      externalServices: 'api::external-service.external-service',
       activities: 'api::activity.activity',
       announcements: 'api::announcement.announcement',
       posts: 'api::club-post.club-post',

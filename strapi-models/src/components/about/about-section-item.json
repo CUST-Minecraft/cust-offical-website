@@ -1,8 +1,8 @@
 {
-  "collectionName": "components_shared_process_steps",
+  "collectionName": "components_about_about_section_items",
   "info": {
-    "displayName": "Process Step",
-    "icon": "list"
+    "displayName": "About Section Item",
+    "icon": "grid"
   },
   "options": {},
   "attributes": {
@@ -14,10 +14,11 @@
       "type": "text",
       "required": true
     },
-    "items": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.text-item"
+    "code": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
     },
     "image": {
       "type": "media",
@@ -29,14 +30,13 @@
     "imageAlt": {
       "type": "string"
     },
-    "imageCaption": {
-      "type": "string"
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
     },
-    "primaryActionLabel": {
-      "type": "string"
-    },
-    "primaryActionUrl": {
-      "type": "string"
+    "enabled": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

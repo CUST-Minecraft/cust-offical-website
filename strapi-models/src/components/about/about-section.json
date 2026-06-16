@@ -1,0 +1,62 @@
+{
+  "collectionName": "components_about_about_sections",
+  "info": {
+    "displayName": "About Section",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "sectionType": {
+      "type": "enumeration",
+      "enum": [
+        "hero",
+        "origin",
+        "actions",
+        "directions",
+        "next"
+      ],
+      "required": true
+    },
+    "eyebrow": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "imageAlt": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.about-section-item"
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.about-section-link"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

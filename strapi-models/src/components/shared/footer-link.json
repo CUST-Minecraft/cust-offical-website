@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_shared_footer_links",
+  "info": {
+    "displayName": "Footer Link",
+    "icon": "link"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "href": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "type": "enumeration",
+      "enum": [
+        "skin",
+        "docs",
+        "mua",
+        "about",
+        "join",
+        "activity",
+        "member",
+        "external"
+      ],
+      "default": "external"
+    },
+    "external": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "disabled": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  }
+}
