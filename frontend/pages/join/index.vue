@@ -1,75 +1,71 @@
 <template>
   <div v-if="page">
-    <PageHero eyebrow="Join CUSTMC" :title="page.title" :summary="page.summary" :image="page.coverImage" />
+    <PageHero
+      eyebrow="Join CUSTMC"
+      :title="page.title"
+      :summary="page.summary"
+      :image="page.coverImage"
+      :hints="{
+        title: joinPageFieldHint('title', '加入页 Hero 标题'),
+        summary: joinPageFieldHint('summary', '加入页 Hero 摘要'),
+        image: joinPageFieldHint('coverImage', '加入页 Hero 头图')
+      }"
+    />
     <section class="content-section join-story">
-      <article class="join-portal" :style="{ '--join-bg': `url('${page.coverImage.src}')` }">
-        <div class="join-portal-copy">
-          <span class="promo-kicker">Ready to Spawn</span>
-          <h2>从一个入口，进入社团的方块世界</h2>
-          <p>{{ page.introContent }}</p>
-          <div class="join-actions">
-            <a v-if="page.applicationUrl" class="pixel-button" :href="page.applicationUrl" target="_blank" rel="noopener noreferrer">
-              立即加入<span aria-hidden="true">›</span>
-            </a>
-            <NuxtLink class="ghost-button" to="/activities">看看活动<span aria-hidden="true">›</span></NuxtLink>
-          </div>
+      <article class="join-flow-panel motion-reveal">
+        <div class="section-heading compact join-flow-heading">
+          <span class="promo-kicker">Open Join Flow</span>
+          <h2>加入流程</h2>
+          <RichTextRenderer v-field-hint="joinPageFieldHint('introContent', '加入流程引导说明')" :content="page.introContent" />
         </div>
-        <aside class="contact-console">
-          <span class="promo-kicker">Contact</span>
-          <h2>联系方式</h2>
-          <ul>
-            <li v-for="method in page.contactMethods" :key="method.label">
-              <span>{{ method.label }}</span>
-              <strong>{{ method.value }}</strong>
-            </li>
-          </ul>
-        </aside>
-      </article>
 
-      <div class="section-heading">
-        <span class="promo-kicker">Checklist</span>
-        <h2>加入前确认这些就够了</h2>
-      </div>
-      <div class="requirement-grid">
-        <article v-for="(item, index) in page.requirements" :key="item" class="requirement-card">
-          <span>0{{ index + 1 }}</span>
-          <p>{{ item }}</p>
-        </article>
-      </div>
-
-      <div class="section-heading">
-        <span class="promo-kicker">Process</span>
-        <h2>三步进入社团服务器</h2>
-      </div>
-      <div class="process-track">
-        <article v-for="(step, index) in page.processSteps" :key="step.title" class="process-step">
-          <span>{{ index + 1 }}</span>
-          <h2>{{ step.title }}</h2>
-          <p>{{ step.summary }}</p>
-        </article>
-      </div>
-
-      <article class="server-showcase join-server">
-        <div class="server-console">
-          <span class="promo-kicker">Server Guide</span>
-          <h2>服务器加入说明</h2>
-          <p>{{ page.serverJoinGuide }}</p>
-        </div>
-        <div class="join-callout">
-          <h2>还有疑问？</h2>
-          <p>先看下面的常见问题，更多细节可以通过联系方式询问社团成员。</p>
+        <div class="join-flow-track motion-stagger">
+          <article v-for="(step, index) in page.processSteps" :key="step.title" class="join-flow-step motion-reveal">
+            <figure v-if="step.image" v-field-hint="processStepHint('image', step, index, '流程步骤图片')" class="join-flow-media">
+              <img :src="step.image.src" :alt="step.image.alt">
+              <figcaption v-if="step.imageCaption" v-field-hint="processStepHint('imageCaption', step, index, '流程步骤图片说明')">{{ step.imageCaption }}</figcaption>
+            </figure>
+            <div class="join-flow-copy">
+              <span class="join-flow-index">{{ stepNumber(index) }}</span>
+              <h2 v-field-hint="processStepHint('title', step, index, '流程步骤标题')">{{ step.title }}</h2>
+              <p v-field-hint="processStepHint('summary', step, index, '流程步骤摘要')">{{ step.summary }}</p>
+              <ul v-if="step.items.length" class="join-flow-items">
+                <li v-for="item in step.items" :key="item" v-field-hint="processStepHint('items', step, index, `流程步骤条目：${item}`)">{{ item }}</li>
+              </ul>
+              <div v-if="step.primaryActionLabel && step.primaryActionUrl" class="join-flow-actions">
+                <a
+                  v-if="isExternalUrl(step.primaryActionUrl)"
+                  v-field-hint="processStepHint('primaryActionLabel', step, index, '流程步骤动作按钮文字')"
+                  class="pixel-button small"
+                  :href="step.primaryActionUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ step.primaryActionLabel }}<span aria-hidden="true">›</span>
+                </a>
+                <NuxtLink
+                  v-else
+                  v-field-hint="processStepHint('primaryActionLabel', step, index, '流程步骤动作按钮文字')"
+                  class="ghost-button"
+                  :to="step.primaryActionUrl"
+                >
+                  {{ step.primaryActionLabel }}<span aria-hidden="true">›</span>
+                </NuxtLink>
+              </div>
+            </div>
+          </article>
         </div>
       </article>
 
-      <article class="faq-panel">
+      <article class="faq-panel motion-reveal">
         <div class="section-heading compact">
           <span class="promo-kicker">FAQ</span>
           <h2>常见问题</h2>
         </div>
         <div class="faq-list">
           <details v-for="faq in page.faqItems" :key="faq.question">
-            <summary>{{ faq.question }}</summary>
-            <p>{{ faq.answer }}</p>
+            <summary v-field-hint="joinPageFieldHint('faqItems.question', `FAQ 问题：${faq.question}`)">{{ faq.question }}</summary>
+            <p v-field-hint="joinPageFieldHint('faqItems.answer', `FAQ 回答：${faq.question}`)">{{ faq.answer }}</p>
           </details>
         </div>
       </article>
@@ -78,10 +74,25 @@
 </template>
 
 <script setup lang="ts">
+import type { JoinProcessStep } from '~/types/content'
+import { joinPageFieldHint } from '~/utils/field-hints'
+
 const { data: page } = await useJoinPage()
 
 useSeoMeta({
   title: computed(() => `${page.value?.title ?? '加入我们'} - 长春理工大学 Minecraft 社团`),
   description: computed(() => page.value?.summary ?? '加入我们')
 })
+
+function stepNumber(index: number) {
+  return String(index + 1).padStart(2, '0')
+}
+
+function isExternalUrl(url: string) {
+  return /^https?:\/\//.test(url)
+}
+
+function processStepHint(field: string, step: JoinProcessStep, index: number, usage: string) {
+  return joinPageFieldHint(`processSteps.${field}`, `${usage}：${step.title || `第 ${index + 1} 步`}`)
+}
 </script>
