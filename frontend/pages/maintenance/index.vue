@@ -3,8 +3,8 @@
     <div class="maintenance-panel">
       <div class="maintenance-copy">
         <p class="eyebrow">Maintenance</p>
-        <h1>{{ title }}</h1>
-        <p>{{ message }}</p>
+        <h1 v-field-hint="maintenanceFieldHint('title', '维护页标题')">{{ title }}</h1>
+        <p v-field-hint="maintenanceFieldHint('message', '维护页说明')">{{ message }}</p>
       </div>
 
       <div class="maintenance-visual" aria-hidden="true">
@@ -17,6 +17,8 @@
 </template>
 
 <script setup lang="ts">
+import { maintenanceFieldHint } from '~/utils/field-hints'
+
 const { data: page } = await useMaintenancePage()
 
 const title = computed(() => typeof page.value?.title === 'string' ? page.value.title : '社团官网维护中')

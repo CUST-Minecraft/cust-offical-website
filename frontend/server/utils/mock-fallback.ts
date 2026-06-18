@@ -15,9 +15,9 @@ export async function withMockFallback<T>(fetcher: () => Promise<T>, fallback: (
 }
 
 export function isStrapiUnavailable(error: unknown) {
-  const message = error instanceof Error ? error.message : String(error)
-  const cause = error instanceof Error && 'cause' in error ? String(error.cause) : ''
-  const statusCode = typeof error === 'object' && error && 'statusCode' in error ? Number(error.statusCode) : undefined
+  const message = (error instanceof Error ? error.message : String(error)).toLowerCase()
+  const cause = (error instanceof Error && 'cause' in error ? String(error.cause) : '').toUpperCase()
+  const statusCode = statusCodeFromError(error)
 
   return (
     message.includes('fetch failed') ||
@@ -35,4 +35,16 @@ export function isStrapiUnavailable(error: unknown) {
 
 function isProduction() {
   return !import.meta.dev
+}
+
+function statusCodeFromError(error: unknown) {
+  if (typeof error !== 'object' || !error) {
+    return undefined
+  }
+
+  const record = error as Record<string, unknown>
+  const status = record.statusCode ?? record.status
+  const statusCode = Number(status)
+
+  return Number.isFinite(statusCode) ? statusCode : undefined
 }
