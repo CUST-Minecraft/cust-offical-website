@@ -7,7 +7,7 @@
       :image="{ src: '/example-assets/section-events-pixel.png', alt: '社团活动头图' }"
     />
     <section class="content-section">
-      <div class="filter-bar">
+      <div class="filter-bar motion-reveal">
         <NuxtLink
           v-for="item in statusFilters"
           :key="item.value || 'all'"
@@ -18,18 +18,18 @@
           {{ item.label }}
         </NuxtLink>
       </div>
-      <div v-if="activities?.length" class="content-grid">
+      <TransitionGroup v-if="activities?.length" name="content-card-list" tag="div" class="content-grid motion-stagger">
         <ContentCard
           v-for="activity in activities"
           :key="activity.slug"
           :title="activity.title"
           :summary="activity.summary"
           :image="activity.coverImage"
-          :date="formatDate(activity.startTime)"
+          :date="formatMonthDay(activity.startTime)"
           :badge="statusLabel(activity.status)"
           :to="`/activities/${activity.slug}`"
         />
-      </div>
+      </TransitionGroup>
       <EmptyState v-else title="暂无活动" message="当前筛选条件下没有活动，试试切换状态。" />
     </section>
   </div>
@@ -37,6 +37,7 @@
 
 <script setup lang="ts">
 import type { ActivitySummary } from '~/types/content'
+import { formatMonthDay } from '~/utils/format'
 
 const route = useRoute()
 const currentStatus = computed(() => String(route.query.status ?? ''))
@@ -54,10 +55,6 @@ useSeoMeta({
   title: '社团活动 - 长春理工大学 Minecraft 社团',
   description: '展示近期活动和历史活动。'
 })
-
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('zh-CN', { month: '2-digit', day: '2-digit' }).format(new Date(value))
-}
 
 function statusLabel(status: ActivitySummary['status']) {
   return {

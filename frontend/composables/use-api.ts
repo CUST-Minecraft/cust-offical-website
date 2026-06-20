@@ -3,8 +3,10 @@ import type {
   ActivitySummary,
   AnnouncementSummary,
   ApiResponse,
+  ExternalService,
   HomeData,
   JoinPageData,
+  MaintenancePageData,
   MemberProfile,
   PostSummary,
   ServiceStatus,
@@ -14,6 +16,7 @@ import type {
 interface SiteSettingsData {
   site: SiteInfo
   navigation: { label: string; href: string }[]
+  externalServices: ExternalService[]
   serviceStatus: ServiceStatus
 }
 
@@ -23,6 +26,10 @@ export function useSiteSettings() {
 
 export function useHome() {
   return usePublicAsyncData('home', () => $fetch<ApiResponse<HomeData>>('/api/public/home').then(unwrapApiResponse))
+}
+
+export function useExternalServices() {
+  return usePublicAsyncData('external-services', () => $fetch<ApiResponse<ExternalService[]>>('/api/public/external-services').then(unwrapApiResponse))
 }
 
 export function useAboutPage() {
@@ -74,7 +81,7 @@ export function usePostDetail(slug: string) {
 }
 
 export function useMaintenancePage() {
-  return usePublicAsyncData('maintenance', () => $fetch<ApiResponse<Record<string, unknown>>>('/api/public/maintenance').then(unwrapApiResponse))
+  return usePublicAsyncData('maintenance', () => $fetch<ApiResponse<MaintenancePageData>>('/api/public/maintenance').then(unwrapApiResponse))
 }
 
 async function usePublicAsyncData<T>(key: string, handler: () => Promise<T>) {

@@ -7,8 +7,8 @@
       :image="{ src: '/example-assets/section-members-pixel.png', alt: '社员介绍头图' }"
     />
     <section class="content-section">
-      <div v-if="members?.length" class="member-grid">
-        <article v-for="member in members" :key="member.slug" class="member-card">
+      <div v-if="members?.length" class="member-grid motion-stagger">
+        <article v-for="member in members" :key="member.slug" class="member-card motion-reveal">
           <div class="member-avatar" :style="{ backgroundImage: `url('${member.avatar?.src ?? '/example-assets/section-members-pixel.png'}')` }" />
           <h2>{{ member.displayName }}</h2>
           <strong>{{ member.roleTitle }}</strong>

@@ -1,6 +1,9 @@
 import { announcements as mockAnnouncements } from '~/data/mock'
+import { assertPublicContentAvailable } from '~/server/utils/public-content-guard'
 
 export default defineEventHandler(async (event) => {
+  await assertPublicContentAvailable()
+
   const slug = getRouterParam(event, 'slug')
   const announcement = slug
     ? await withMockFallback(

@@ -5,7 +5,7 @@
       :summary="activity.summary"
       :content="activity.content"
       :image="activity.coverImage"
-      :date="formatDate(activity.startTime)"
+      :date="formatMediumDateTime(activity.startTime)"
       :category="statusLabel(activity.status)"
     >
       <div class="detail-actions">
@@ -23,23 +23,16 @@
 
 <script setup lang="ts">
 import type { ActivitySummary } from '~/types/content'
+import { formatMediumDateTime } from '~/utils/format'
 
 const route = useRoute()
-const { data: activity, error } = await useActivityDetail(String(route.params.slug))
-
-if (error.value) {
-  throw createError({ statusCode: 404, statusMessage: '活动不存在或未发布' })
-}
+const { data: activity } = await useActivityDetail(String(route.params.slug))
 
 useSeoMeta({
   title: computed(() => `${activity.value?.title ?? '活动详情'} - 长春理工大学 Minecraft 社团`),
   description: computed(() => activity.value?.summary ?? '活动详情'),
   ogImage: computed(() => activity.value?.coverImage.src)
 })
-
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('zh-CN', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
-}
 
 function statusLabel(status: ActivitySummary['status']) {
   return {

@@ -5,7 +5,7 @@
       :summary="post.summary"
       :content="post.content"
       :image="post.coverImage"
-      :date="formatDate(post.publishedAt)"
+      :date="formatMediumDateTime(post.publishedAt)"
       :category="`${post.category} · ${post.authorName}`"
     >
       <div class="promo-tags detail-tags">
@@ -22,12 +22,10 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const { data: post, error } = await usePostDetail(String(route.params.slug))
+import { formatMediumDateTime } from '~/utils/format'
 
-if (error.value) {
-  throw createError({ statusCode: 404, statusMessage: '动态不存在或未发布' })
-}
+const route = useRoute()
+const { data: post } = await usePostDetail(String(route.params.slug))
 
 useSeoMeta({
   title: computed(() => `${post.value?.title ?? '动态详情'} - 长春理工大学 Minecraft 社团`),
@@ -35,7 +33,4 @@ useSeoMeta({
   ogImage: computed(() => post.value?.coverImage?.src)
 })
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('zh-CN', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
-}
 </script>

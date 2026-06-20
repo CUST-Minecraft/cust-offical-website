@@ -7,13 +7,13 @@
       :image="{ src: '/example-assets/section-events-pixel.png', alt: '社团公告头图' }"
     />
     <section class="content-section">
-      <div v-if="announcements?.length" class="content-grid">
+      <div v-if="announcements?.length" class="content-grid motion-stagger">
         <ContentCard
           v-for="announcement in announcements"
           :key="announcement.slug"
           :title="announcement.title"
           :summary="announcement.summary"
-          :date="formatDate(announcement.publishedAt)"
+          :date="formatMediumDate(announcement.publishedAt)"
           :category="announcement.category"
           :badge="announcement.isPinned ? '置顶' : undefined"
           :image="{ src: '/example-assets/cust-main-gate-hero.png', alt: announcement.title }"
@@ -26,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+import { formatMediumDate } from '~/utils/format'
+
 const { data: announcements } = await useAnnouncements({ page: 1, pageSize: 10 })
 
 useSeoMeta({
@@ -33,7 +35,4 @@ useSeoMeta({
   description: '正式通知、维护说明、活动结果和重要更新。'
 })
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('zh-CN', { dateStyle: 'medium' }).format(new Date(value))
-}
 </script>

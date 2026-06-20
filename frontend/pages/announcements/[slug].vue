@@ -5,7 +5,7 @@
       :summary="announcement.summary"
       :content="announcement.content"
       :image="{ src: '/example-assets/cust-main-gate-hero.png', alt: announcement.title }"
-      :date="formatDate(announcement.publishedAt)"
+      :date="formatMediumDateTime(announcement.publishedAt)"
       :category="announcement.category"
     >
       <div v-if="announcement.attachments.length" class="attachment-list">
@@ -21,19 +21,14 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const { data: announcement, error } = await useAnnouncementDetail(String(route.params.slug))
+import { formatMediumDateTime } from '~/utils/format'
 
-if (error.value) {
-  throw createError({ statusCode: 404, statusMessage: '公告不存在或未发布' })
-}
+const route = useRoute()
+const { data: announcement } = await useAnnouncementDetail(String(route.params.slug))
 
 useSeoMeta({
   title: computed(() => `${announcement.value?.title ?? '公告详情'} - 长春理工大学 Minecraft 社团`),
   description: computed(() => announcement.value?.summary ?? '公告详情')
 })
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('zh-CN', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
-}
 </script>

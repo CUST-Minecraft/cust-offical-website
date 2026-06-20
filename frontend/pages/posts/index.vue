@@ -7,14 +7,14 @@
       :image="{ src: '/example-assets/section-gallery-pixel.png', alt: '社团动态头图' }"
     />
     <section class="content-section">
-      <div v-if="posts?.length" class="content-grid">
+      <div v-if="posts?.length" class="content-grid motion-stagger">
         <ContentCard
           v-for="post in posts"
           :key="post.slug"
           :title="post.title"
           :summary="post.summary"
           :image="post.coverImage"
-          :date="formatDate(post.publishedAt)"
+          :date="formatMediumDate(post.publishedAt)"
           :category="post.category"
           :badge="post.isFeatured ? '推荐' : undefined"
           :to="`/posts/${post.slug}`"
@@ -26,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+import { formatMediumDate } from '~/utils/format'
+
 const { data: posts } = await usePosts({ page: 1, pageSize: 10 })
 
 useSeoMeta({
@@ -33,7 +35,4 @@ useSeoMeta({
   description: '展示社团博文、服务器日常、成员创作进展和活动花絮。'
 })
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat('zh-CN', { dateStyle: 'medium' }).format(new Date(value))
-}
 </script>
