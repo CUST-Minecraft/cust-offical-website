@@ -6,7 +6,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     strapiUrl: 'http://localhost:1337',
     strapiApiToken: '',
-    agentServiceUrl: ''
+    agentServiceUrl: '',
+    public: {
+      fieldHintsEnabled: false
+    }
   },
   app: {
     head: {
