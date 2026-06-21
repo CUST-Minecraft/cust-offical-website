@@ -39,15 +39,26 @@ Define the public website boundary after removing the local login, member center
 - **THEN** 系统 MUST 不调用 `/api/member/*` 或依赖 `MemberAccount`、`MemberService` 类型
 
 ### Requirement: 外部服务由各自系统承担访问控制
-官网 SHALL 将皮肤站和 CMS 视为独立外部系统，不通过官网登录态控制访问，不代理、不嵌入、不管理其业务数据。
+官网 SHALL 将皮肤站、文档中心、MUA 官网、CMS 和其他外部服务视为独立外部系统，不通过官网登录态控制访问，不代理、不嵌入、不管理其业务数据。官网 MUST 使用统一外部服务模型管理公开入口的展示、URL、启用状态和排序。
 
 #### Scenario: 皮肤站入口需要展示
 - **WHEN** 官网需要向访问者提供皮肤站入口
 - **THEN** 系统 MUST 使用 Header 公开外链或公开说明引导，并明确皮肤站登录和权限由皮肤站自身处理
+- **AND** 系统 MUST 从外部服务模型读取皮肤站入口数据
 
 #### Scenario: 管理员访问 CMS
 - **WHEN** 内容管理员需要维护官网内容
 - **THEN** 系统 MUST 依赖 CMS 自身入口和权限机制，而不是官网登录后的 `/member/admin` 跳转
+
+#### Scenario: 页脚展示外部服务入口
+- **WHEN** 官网页脚需要展示 MUA 官网或其他外部入口
+- **THEN** 系统 MUST 从外部服务模型读取可在页脚展示的入口
+- **AND** 系统 MUST NOT 通过代理、嵌入或抓取方式管理外部网站内容
+
+#### Scenario: 检查外部服务模型边界
+- **WHEN** 系统实现完成后检查 `strapi-models`
+- **THEN** 系统 MUST 允许外部服务入口配置 URL、图标、启用状态和展示位置
+- **AND** 系统 MUST NOT 新增用于管理皮肤站、文档中心、MUA 官网或 CMS 业务数据的 content-type
 
 ### Requirement: 文档中心作为公开外部服务入口
 官网 SHALL 将文档中心视为独立外部系统，并且只通过公开入口引导访问者前往该系统。官网 MUST NOT 通过官网登录态控制文档中心访问，不代理、不嵌入、不同步、不管理文档中心业务数据。
@@ -100,3 +111,18 @@ Define the public website boundary after removing the local login, member center
 - **WHEN** 系统保留开发用 mock 数据
 - **THEN** mock 数据 MUST 仅用于开发或测试环境
 - **AND** 项目文档 MUST 明确 mock 数据不是生产公开内容来源
+
+### Requirement: 页脚外联图标映射不得破坏公开入口展示
+官网页脚外联入口 SHALL 继续由外部服务模型驱动。当前台遇到已规划公开服务图标时，系统 MUST 使用对应图标；遇到未知图标时，系统 MUST 保持入口可见并使用安全默认图标。
+
+#### Scenario: 页脚展示配置了 agent 图标的外部服务
+- **WHEN** 外部服务模型中存在启用且允许在页脚展示的服务
+- **AND** 该服务配置 `agent` 图标
+- **THEN** 官网页脚 MUST 展示该外部服务入口
+- **AND** 系统 MUST 使用可识别的 `agent` 图标展示该入口
+
+#### Scenario: 页脚展示未知图标的外部服务
+- **WHEN** 外部服务模型中存在启用且允许在页脚展示的服务
+- **AND** 该服务配置了前台尚不支持的图标
+- **THEN** 官网页脚 MUST 保持该外部服务入口可见
+- **AND** 系统 MUST 使用安全默认图标，而不是隐藏入口或抛出错误
